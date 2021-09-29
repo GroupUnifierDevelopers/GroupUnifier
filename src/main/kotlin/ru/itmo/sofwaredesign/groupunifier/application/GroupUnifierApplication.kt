@@ -1,4 +1,4 @@
-package ru.itmo.sofwaredesign.groupunifier
+package ru.itmo.sofwaredesign.groupunifier.application
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
