@@ -17,7 +17,7 @@ private const val TEST_BOT_LOGIN = "testBotLogin"
 internal class ForwarderTest {
 
     @Test
-    fun forwardTest() = getTestData().run {
+    fun `forward message`() = getTestData().run {
         whenever(
             mockChatRepository
                 .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
@@ -33,7 +33,7 @@ internal class ForwarderTest {
     }
 
     @Test
-    fun noChatTest() = getTestData().run {
+    fun `bot added to chat, but chat is not registered`() = getTestData().run {
         whenever(
             mockChatRepository
                 .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
@@ -49,7 +49,7 @@ internal class ForwarderTest {
     }
 
     @Test
-    fun fromBotMessageTest() = getTestData(
+    fun `Do not forward message from bot`() = getTestData(
         userLogin = TEST_BOT_LOGIN
     ).run {
         whenever(
@@ -67,7 +67,7 @@ internal class ForwarderTest {
     }
 
     @Test
-    fun retrySuccessTest() = getTestData().run {
+    fun `rutry until success`() = getTestData().run {
         whenever(
             mockChatRepository
                 .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
@@ -88,7 +88,7 @@ internal class ForwarderTest {
     }
 
     @Test
-    fun retryFailTest() = getTestData().run {
+    fun `retry a limited number of times`() = getTestData().run {
         whenever(
             mockChatRepository
                 .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
