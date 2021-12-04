@@ -4,5 +4,8 @@ data class User(
     val login: String,
     val messenger: Messenger
 ) {
-    val isGroupUnifierBot: Boolean = messenger.botLogin == login
+    val isGroupUnifierBot: Boolean
+        get() {
+            return messenger.botLogin == login
+        }
 }

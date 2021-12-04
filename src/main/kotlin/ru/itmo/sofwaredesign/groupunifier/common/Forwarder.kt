@@ -14,7 +14,7 @@ class Forwarder(
             if (message.fromUser.isGroupUnifierBot) {
                 return
             }
-            val chat = chatRepository.getChatByMessengerAndId(
+            val chat = chatRepository.getByMessengerAndId(
                 message.fromMessenger,
                 message.fromChatId
             )
