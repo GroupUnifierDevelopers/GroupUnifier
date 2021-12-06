@@ -9,4 +9,6 @@ interface ChatRepository {
     fun save(chat: Chat)
 
     fun delete(chat: Chat)
+
+    fun merge(chat1: Chat, chat2: Chat): Boolean
 }
