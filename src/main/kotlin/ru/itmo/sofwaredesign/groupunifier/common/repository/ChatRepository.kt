@@ -4,5 +4,9 @@ import ru.itmo.sofwaredesign.groupunifier.common.domain.Chat
 import ru.itmo.sofwaredesign.groupunifier.common.domain.Messenger
 
 interface ChatRepository {
-    fun getChatByMessengerAndId(messenger: Messenger, chatId: String): Chat?
+    fun getByMessengerAndId(messenger: Messenger, chatId: String): Chat?
+
+    fun save(chat: Chat)
+
+    fun delete(chat: Chat)
 }

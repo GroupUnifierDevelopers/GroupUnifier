@@ -14,63 +14,63 @@ private const val FROM_TEST_CHAT_ID = "from test chat id"
 private const val TO_TEST_CHAT_ID = "to test chat id"
 private const val TEST_BOT_LOGIN = "testBotLogin"
 
-class ForwarderTest {
+internal class ForwarderTest {
 
     @Test
-    fun forwardTest() = getTestData().run {
+    fun `forward message`() = getTestData().run {
         whenever(
             mockChatRepository
-                .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+                .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         )
             .thenReturn(chat)
 
         forwarder.forwardMessage(message)
 
         verify(mockChatRepository)
-            .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+            .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         verify(toMockMessenger)
             .sendMessage(TO_TEST_CHAT_ID, message)
     }
 
     @Test
-    fun noChatTest() = getTestData().run {
+    fun `bot added to chat, but chat is not registered`() = getTestData().run {
         whenever(
             mockChatRepository
-                .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+                .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         )
             .thenReturn(null)
 
         forwarder.forwardMessage(message)
 
         verify(mockChatRepository)
-            .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+            .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         verify(toMockMessenger, times(0))
             .sendMessage(TO_TEST_CHAT_ID, message)
     }
 
     @Test
-    fun fromBotMessageTest() = getTestData(
+    fun `Do not forward message from bot`() = getTestData(
         userLogin = TEST_BOT_LOGIN
     ).run {
         whenever(
             mockChatRepository
-                .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+                .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         )
             .thenReturn(null)
 
         forwarder.forwardMessage(message)
 
         verify(mockChatRepository, times(0))
-            .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+            .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         verify(toMockMessenger, times(0))
             .sendMessage(TO_TEST_CHAT_ID, message)
     }
 
     @Test
-    fun retrySuccessTest() = getTestData().run {
+    fun `rutry until success`() = getTestData().run {
         whenever(
             mockChatRepository
-                .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+                .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         )
             .thenReturn(chat)
         whenever(toMockMessenger.sendMessage(any(), any()))
@@ -82,16 +82,16 @@ class ForwarderTest {
         forwarder.forwardMessage(message)
 
         verify(mockChatRepository)
-            .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+            .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         verify(toMockMessenger, times(4))
             .sendMessage(TO_TEST_CHAT_ID, message)
     }
 
     @Test
-    fun retryFailTest() = getTestData().run {
+    fun `retry a limited number of times`() = getTestData().run {
         whenever(
             mockChatRepository
-                .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+                .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         )
             .thenReturn(chat)
         whenever(toMockMessenger.sendMessage(any(), any()))
@@ -100,7 +100,7 @@ class ForwarderTest {
         forwarder.forwardMessage(message)
 
         verify(mockChatRepository)
-            .getChatByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
+            .getByMessengerAndId(fromMockMessenger, FROM_TEST_CHAT_ID)
         verify(toMockMessenger, times(5))
             .sendMessage(TO_TEST_CHAT_ID, message)
     }

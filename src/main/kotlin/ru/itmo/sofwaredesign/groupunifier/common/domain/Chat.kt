@@ -1,5 +1,5 @@
 package ru.itmo.sofwaredesign.groupunifier.common.domain
 
-class Chat {
-    val implementations = mutableMapOf<Messenger, String>()
-}
+data class Chat(
+    val implementations: MutableMap<Messenger, String> = mutableMapOf()
+)
