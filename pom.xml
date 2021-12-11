@@ -19,6 +19,7 @@
 		<jackson.version>2.12.5</jackson.version>
 		<mockito.core.version>3.12.4</mockito.core.version>
 		<mockito.kotlin.version>3.2.0</mockito.kotlin.version>
+		<exec.mainClass>ru.itmo.sofwaredesign.groupunifier.application.GroupUnifierApplicationKt</exec.mainClass>
 	</properties>
 	<dependencies>
 		<dependency>
